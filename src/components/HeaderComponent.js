@@ -6,27 +6,24 @@ class Header extends Component {
     constructor(props) {
         super(props);
 
-        this.toggleModal = this.toggleModal.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
-        this.toggleNav = this.toggleNav.bind(this);
         this.state = {
             isNavOpen: false
         };
     }
 
-    toggleNav() {
+    toggleNav = () => {
         this.setState({
             isNavOpen: !this.state.isNavOpen
         });
     }
 
-    toggleModal() {
+    toggleModal = () => {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
     }
 
-    handleLogin(event) {
+    handleLogin = (event) => {
         this.toggleModal();
         alert("Username: " + this.username.value + " Password: " + this.password.value + " Remember: " + this.remember.checked);
         event.preventDefault();
