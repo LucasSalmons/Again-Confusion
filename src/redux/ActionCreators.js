@@ -46,6 +46,37 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
         });
 };
 
+export const postFeedback = (feedback) => (dispatch) => {
+
+    return fetch(baseUrl + 'feedback', {
+        method: "POST",
+        body: JSON.stringify(feedback),
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "same-origin",
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => { console.log('Feedback', response); alert('Thank you for your feedback!') })
+        .catch(error => {
+            console.log('post feedback', error.message);
+            alert('Your feedback could not be posted\nError: ' + error.message);
+        });
+};
+
 export const fetchDishes = () => (dispatch) => {
     dispatch(dishesLoading(true));
 
@@ -149,9 +180,7 @@ export const addPromos = (promos) => ({
     payload: promos
 });
 
-/*
 export const fetchLeaders = () => (dispatch) => {
-
     dispatch(leadersLoading());
 
     return fetch(baseUrl + 'leaders')
@@ -159,19 +188,19 @@ export const fetchLeaders = () => (dispatch) => {
             if (response.ok) {
                 return response;
             } else {
-                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                let error = new Error('Error' + response.status + ': ' + response.statusText);
                 error.response = response;
                 throw error;
             }
         },
             error => {
-                var errmess = new Error(error.message);
+                let errmess = new Error(error.message);
                 throw errmess;
             })
         .then(response => response.json())
         .then(leaders => dispatch(addLeaders(leaders)))
         .catch(error => dispatch(leadersFailed(error.message)));
-}
+};
 
 export const leadersLoading = () => ({
     type: ActionTypes.LEADERS_LOADING
@@ -186,4 +215,3 @@ export const addLeaders = (leaders) => ({
     type: ActionTypes.ADD_LEADERS,
     payload: leaders
 });
-*/
