@@ -118,10 +118,10 @@ class CommentForm extends Component {
     }
 
     toggleModal = () => {
-        this.setState({
-            isModalOpen: !this.state.isModalOpen
-        });
-    }
+        this.setState(prevState => ({
+            isModalOpen: !prevState.isModalOpen
+        }));
+    };
 
     handleSubmit = (values) => {
         this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
